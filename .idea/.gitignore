@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\CORFAMET\Desktop\UPC-2021-2\Fundamentos de Arquitectura\Microservices\SOCIAL-MICROSERVICE\SocialNetworkMicroservice\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
