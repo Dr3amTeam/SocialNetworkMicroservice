@@ -31,23 +31,16 @@ public class PostHistoryView {
     @Schema(example = "992", description = "ID de empleador")
     @Column(length = 36) @Getter @Setter
     private String employeeId;
-    @Schema(example = "19/11/2021",description = "Fecha de creación")
-    @Column(nullable = true) @Getter @Setter
-    private Instant createdAt;
-    @Schema(example = "21/11/2021",description = "Fecha de actualización")
-    @Column(nullable = true) @Getter @Setter
-    private Instant updatedAt;
 
     public PostHistoryView() {}
 
-    public PostHistoryView(String postId, String videoUrl, String content, Date uploadDate, String employeeId, Instant createdAt, Instant updatedAt) {
+    public PostHistoryView(String postId, String videoUrl, String content, Date uploadDate, String employeeId) {
         this.postId = postId;
         this.videoUrl = videoUrl;
         this.content = content;
         this.uploadDate = uploadDate;
         this.employeeId = employeeId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+
     }
 
     public PostHistoryView(PostHistoryView postHistoryView) {
@@ -56,7 +49,6 @@ public class PostHistoryView {
         this.content = postHistoryView.content;
         this.uploadDate = postHistoryView.uploadDate;
         this.employeeId = postHistoryView.employeeId;
-        this.createdAt = postHistoryView.createdAt;
-        this.updatedAt = postHistoryView.updatedAt;
+
     }
 }

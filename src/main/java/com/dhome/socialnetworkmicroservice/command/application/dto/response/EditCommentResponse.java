@@ -11,8 +11,6 @@ public class EditCommentResponse {
     private String commentId;
     @Schema(example = "Buen viaje", description = "Contenido del comentario")
     private String text;
-    @Schema(example = "1", description = "ID del comentador")
-    private String commenterId;
     @Schema(example = "1", description = "ID del post")
     private String postId;
 }

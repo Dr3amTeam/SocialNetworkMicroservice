@@ -131,6 +131,16 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>2.5.4</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.dr3amteam.dhome</groupId>
+            <artifactId>register-microservice-contracts</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.dr3amteam.dhome</groupId>
+            <artifactId>social-network-microservice-contracts</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

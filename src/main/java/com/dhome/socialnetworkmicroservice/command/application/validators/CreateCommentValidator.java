@@ -21,11 +21,6 @@ public class CreateCommentValidator {
             notification.addError("Comment text is required");
         }
 
-        String commenterId = createCommentRequest.getCommenterId().trim();
-        if(commenterId.isEmpty()){
-            notification.addError("Post commenter Id is required");
-        }
-
         String postId = createCommentRequest.getPostId().trim();
         if(postId.isEmpty()){
             notification.addError("Post id is required");

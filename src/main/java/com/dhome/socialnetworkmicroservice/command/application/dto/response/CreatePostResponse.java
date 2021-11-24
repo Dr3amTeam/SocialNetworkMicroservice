@@ -7,11 +7,17 @@ import lombok.Value;
 
 import java.util.Date;
 
-@Value
+
 public class CreatePostResponse {
     private String postId;
-    private String videoUrl;
-    private String content;
-    private Date uploadDate;
-    private String employeeId;;
+
+    public CreatePostResponse(String postId){
+        this.postId=postId;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+
 }

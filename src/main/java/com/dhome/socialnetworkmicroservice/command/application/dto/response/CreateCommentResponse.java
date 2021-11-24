@@ -11,6 +11,5 @@ import java.util.Date;
 public class CreateCommentResponse {
     private String commentId;
     private String text;
-    private String commenterId;
     private String postId;
 }

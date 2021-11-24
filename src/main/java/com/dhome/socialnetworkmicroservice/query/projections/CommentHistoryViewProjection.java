@@ -23,10 +23,7 @@ public class CommentHistoryViewProjection {
     public void on(CommentCreated event, @Timestamp Instant timestamp){
         CommentHistoryView commentHistoryView = new CommentHistoryView(event.getCommentId(),
                 event.getText(),
-                event.getCommenterId(),
-                event.getPostId(),
-                event.getOccurredOn(),
-                timestamp);
+                event.getPostId());
         commentViewRepository.save(commentHistoryView);
     }
 
@@ -36,7 +33,6 @@ public class CommentHistoryViewProjection {
         if(commentHistoryViewOptional.isPresent()){
             CommentHistoryView commentHistoryView = commentHistoryViewOptional.get();
             commentHistoryView.setText(event.getText());
-            commentHistoryView.setCommenterId(event.getCommenterId());
             commentHistoryView.setPostId(event.getPostId());
             commentViewRepository.save(commentHistoryView);
         }

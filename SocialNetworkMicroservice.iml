@@ -260,14 +260,8 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: de.codecentric:spring-boot-admin-starter-client:2.5.4" level="project" />
     <orderEntry type="library" name="Maven: de.codecentric:spring-boot-admin-client:2.5.4" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/social-network-microservice-contracts/target/social-network-microservice-contracts-0.0.1-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: io.github.dr3amteam.dhome:register-microservice-contracts:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.persistence:javax.persistence-api:2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.github.dr3amteam.dhome:social-network-microservice-contracts:1.0.0" level="project" />
   </component>
 </module>

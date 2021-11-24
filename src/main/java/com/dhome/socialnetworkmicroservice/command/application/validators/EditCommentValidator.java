@@ -32,10 +32,6 @@ public class EditCommentValidator {
         if(text.isEmpty()){
             notification.addError("Comment text is required");
         }
-        String commenterId = editCommentRequest.getCommenterId().trim();
-        if(commenterId.isEmpty()){
-            notification.addError("Commenter Id is required");
-        }
 
         String postId = editCommentRequest.getPostId().trim();
         if(postId.isEmpty()){

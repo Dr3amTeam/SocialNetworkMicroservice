@@ -2,8 +2,12 @@ package com.dhome.socialnetworkmicroservice.command.domain;
 
 import com.dhome.socialnetworkmicroservicecontracts.commands.CreatePost;
 import com.dhome.socialnetworkmicroservicecontracts.commands.EditPost;
+import com.dhome.socialnetworkmicroservicecontracts.commands.FailPost;
+import com.dhome.socialnetworkmicroservicecontracts.commands.PublishPost;
 import com.dhome.socialnetworkmicroservicecontracts.events.PostCreated;
 import com.dhome.socialnetworkmicroservicecontracts.events.PostEdited;
+import com.dhome.socialnetworkmicroservicecontracts.events.PostFailed;
+import com.dhome.socialnetworkmicroservicecontracts.events.PostPublished;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -34,8 +38,7 @@ public class Post {
                 command.getVideoUrl(),
                 command.getContent(),
                 command.getUploadDate(),
-                command.getEmployeeId(),
-                now
+                command.getEmployeeId()
         ));
     }
 
@@ -54,6 +57,32 @@ public class Post {
         );
     }
 
+    @CommandHandler
+    public void handle(PublishPost command) {
+        apply(
+                new PostPublished(
+                        command.getPostId(),
+                        command.getVideoUrl(),
+                        command.getContent(),
+                        command.getUploadDate(),
+                        command.getEmployeeId()
+                )
+        );
+    }
+
+    @CommandHandler
+    public void handle(FailPost command) {
+        apply(
+                new PostFailed(
+                        command.getPostId(),
+                        command.getVideoUrl(),
+                        command.getContent(),
+                        command.getUploadDate(),
+                        command.getEmployeeId()
+                )
+        );
+    }
+
     @EventSourcingHandler
     public void on(PostCreated event) {
         this.postId = event.getPostId();
@@ -65,6 +94,24 @@ public class Post {
 
     @EventSourcingHandler
     public void on(PostEdited event) {
+        this.postId = event.getPostId();
+        this.videoUrl = event.getVideoUrl();
+        this.content = event.getContent();
+        this.uploadDate = event.getUploadDate();
+        this.employeeId = event.getEmployeeId();
+    }
+
+    @EventSourcingHandler
+    public void on(PostPublished event) {
+        this.postId = event.getPostId();
+        this.videoUrl = event.getVideoUrl();
+        this.content = event.getContent();
+        this.uploadDate = event.getUploadDate();
+        this.employeeId = event.getEmployeeId();
+    }
+
+    @EventSourcingHandler
+    public void on(PostFailed event) {
         this.postId = event.getPostId();
         this.videoUrl = event.getVideoUrl();
         this.content = event.getContent();

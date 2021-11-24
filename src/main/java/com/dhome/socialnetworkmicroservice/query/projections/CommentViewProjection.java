@@ -24,10 +24,7 @@ public class CommentViewProjection {
     public void on(CommentCreated event, @Timestamp Instant timestamp){
         CommentView commentView = new CommentView(event.getCommentId(),
                 event.getText(),
-                event.getCommenterId(),
-                event.getPostId(),
-                event.getOccurredOn(),
-                timestamp);
+                event.getPostId());
         commentViewRepository.save(commentView);
     }
 
@@ -37,7 +34,6 @@ public class CommentViewProjection {
         if(commentViewOptional.isPresent()){
             CommentView commentView = commentViewOptional.get();
             commentView.setText(event.getText());
-            commentView.setCommenterId(event.getCommenterId());
             commentView.setPostId(event.getPostId());
             commentViewRepository.save(commentView);
         }
