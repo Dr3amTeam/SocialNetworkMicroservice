@@ -8,7 +8,7 @@ import lombok.Value;
 import java.util.Date;
 
 
-@Value
+//@Value
 public class EditPostRequest {
     @Schema(example = "1", description = "ID del post")
     private @Setter @Getter String postId;

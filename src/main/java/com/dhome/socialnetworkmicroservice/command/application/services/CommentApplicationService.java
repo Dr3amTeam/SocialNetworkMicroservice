@@ -4,11 +4,14 @@ import com.dhome.common.application.Notification;
 import com.dhome.common.application.Result;
 import com.dhome.common.application.ResultType;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.CreateCommentRequest;
+import com.dhome.socialnetworkmicroservice.command.application.dto.request.EditCommentRequest;
 import com.dhome.socialnetworkmicroservice.command.application.dto.response.CreateCommentResponse;
+import com.dhome.socialnetworkmicroservice.command.application.dto.response.EditCommentResponse;
 import com.dhome.socialnetworkmicroservice.command.application.validators.CreateCommentValidator;
 import com.dhome.socialnetworkmicroservice.command.application.validators.EditCommentValidator;
 import com.dhome.socialnetworkmicroservice.command.infra.CommentTextRepository;
 import com.dhome.socialnetworkmicroservicecontracts.commands.CreateComment;
+import com.dhome.socialnetworkmicroservicecontracts.commands.EditComment;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +55,34 @@ public class CommentApplicationService {
                 createComment.getPostId()
         );
         return Result.success(createCommentResponse);
+    }
+
+    public Result<EditCommentResponse, Notification> edit (EditCommentRequest editCommentRequest) throws Exception {
+        Notification notification = this.editCommentValidator.validate(editCommentRequest);
+        if(notification.hasErrors()){
+            return Result.failure(notification);
+        }
+        EditComment editComment = new EditComment(
+                editCommentRequest.getCommentId().trim(),
+                editCommentRequest.getText().trim(),
+                editCommentRequest.getPostId().trim()
+        );
+
+        CompletableFuture<Object> future = commandGateway.send(editComment);
+        CompletableFuture<ResultType> futureResult = future.handle((ok, ex) -> (ex != null) ? ResultType.FAILURE : ResultType.SUCCESS);
+        ResultType resultType = futureResult.get();
+        if(resultType == ResultType.FAILURE){
+            throw new Exception();
+        }
+        EditCommentResponse editCommentResponse = new EditCommentResponse(
+                editComment.getCommentId(),
+                editComment.getText(),
+                editComment.getPostId()
+        );
+
+
+        return Result.success(editCommentResponse);
+
     }
 }
 

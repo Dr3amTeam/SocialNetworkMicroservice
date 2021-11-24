@@ -3,11 +3,12 @@ package com.dhome.socialnetworkmicroservice.command.application.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.Value;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-
+@Value
 public class CreatePostRequest {
     @Schema(example = "https://youtu.be/RSmwdijv_M0", description = "URL de video")
     private @Getter String videoUrl;

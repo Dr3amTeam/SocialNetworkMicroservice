@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.Value;
 
 
-@Value
+//@Value
 public class EditCommentRequest {
     @Schema(example = "1", description = "ID del comentario")
     private @Setter @Getter String commentId;
