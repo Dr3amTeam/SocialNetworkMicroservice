@@ -31,6 +31,7 @@ C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhom
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\command\application\dto\response\CreatePostResponse.java
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\command\application\validators\CreatePostValidator.java
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\query\projections\CommentHistoryView.java
+C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\command\application\dto\response\CreatePostErrorResponse.java
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\command\application\validators\CreateCommentValidator.java
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\command\application\dto\response\CreateCommentResponse.java
 C:\Users\Ryzen\Documents\GitHub\SocialNetworkMicroservice\src\main\java\com\dhome\socialnetworkmicroservice\config\AxonConfig.java
