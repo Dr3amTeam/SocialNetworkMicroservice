@@ -2,39 +2,34 @@ package com.dhome.socialnetworkmicroservice.command.application.validators;
 
 import com.dhome.common.application.Notification;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.CreatePostRequest;
-import com.dhome.socialnetworkmicroservice.command.application.dto.request.EditPostRequest;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescription;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContentRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Component
 public class CreatePostValidator {
-    private final PostDescriptionRepository postDescriptionRepository;
-    public CreatePostValidator(PostDescriptionRepository postDescriptionRepository) {
-        this.postDescriptionRepository = postDescriptionRepository;
+    private final PostContentRepository postContentRepository;
+    public CreatePostValidator(PostContentRepository postContentRepository) {
+        this.postContentRepository = postContentRepository;
     }
 
     public Notification validate(CreatePostRequest createPostRequest) {
 
         Notification notification = new Notification();
-        String postId = createPostRequest.getPostId().trim();
-        if(postId.isEmpty()){
-            notification.addError("Post id is required");
-        }
 
-        String description = createPostRequest.getDescription().trim();
-        if(description.isEmpty()){
-            notification.addError("Post description is required");
+        String videoUrl = createPostRequest.getVideoUrl().trim();
+        if(videoUrl.isEmpty()){
+            notification.addError("Post content is required");
         }
-        Date createdDate = createPostRequest.getCreatedDate();
-        if(createdDate == null){
-            notification.addError("Post created date is required");
+        String content = createPostRequest.getContent().trim();
+        if(content.isEmpty()){
+            notification.addError("Post content is required");
         }
-
-
+        Date uploadDate = createPostRequest.getUploadDate();
+        if(uploadDate == null){
+            notification.addError("Post upload date is required");
+        }
         String employeeId = createPostRequest.getEmployeeId().trim();
         if(employeeId.isEmpty()){
             notification.addError("Emlpoyee ID is required");

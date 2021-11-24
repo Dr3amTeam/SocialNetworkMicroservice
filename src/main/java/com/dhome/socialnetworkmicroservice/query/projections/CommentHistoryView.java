@@ -16,39 +16,40 @@ public class CommentHistoryView {
     @Schema(example = "1", description = "Número de historial de comentario")
     @Id @GeneratedValue @Getter @Setter
     private Long commentHistoryId;
-
-    @Schema(example = "1", description = "Id del comentario")
-    @Column(length = 36) @Getter @Setter private String commentId;
-
-    @Schema(example = "Hola buenas tardes", description = "Mensaje")
-    @Column(length = 36) @Getter @Setter private String message;
-
-    @Schema(example = "1", description = "Post Id")
-    @Column(length = 36) @Getter @Setter private String postId;
-
+    @Schema(example = "1", description = "ID del comentario")
+    @Column(length = 36) @Getter @Setter
+    private String commentId;
+    @Schema(example = "Buen viaje", description = "Contenido del comentario")
+    @Column(length = 300) @Getter @Setter
+    private String text;
+    @Schema(example = "1", description = "ID de comentador")
+    @Column(length = 36) @Getter @Setter
+    private String commenterId;
+    @Schema(example = "1", description = "ID de post")
+    @Column(length = 36) @Getter @Setter
+    private String postId;
     @Schema(example = "19/11/2021",description = "Fecha de creación")
     @Column(nullable = true) @Getter @Setter
     private Instant createdAt;
-
     @Schema(example = "21/11/2021",description = "Fecha de actualización")
     @Column(nullable = true) @Getter @Setter
     private Instant updatedAt;
 
-    public CommentHistoryView(){
+    public CommentHistoryView() {}
 
-    }
-
-    public CommentHistoryView(String commentId, String message, String postId, Instant createdAt, Instant updatedAt){
+    public CommentHistoryView(String commentId, String text, String commenterId, String postId, Instant createdAt, Instant updatedAt) {
         this.commentId = commentId;
-        this.message = message;
+        this.text = text;
+        this.commenterId = commenterId;
         this.postId = postId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public CommentHistoryView(CommentHistoryView commentHistoryView){
-        this.postId = commentHistoryView.commentId;
-        this.message = commentHistoryView.message;
+    public CommentHistoryView(CommentHistoryView commentHistoryView) {
+        this.commentId = commentHistoryView.commentId;
+        this.text = commentHistoryView.text;
+        this.commenterId = commentHistoryView.commenterId;
         this.postId = commentHistoryView.postId;
         this.createdAt = commentHistoryView.createdAt;
         this.updatedAt = commentHistoryView.updatedAt;

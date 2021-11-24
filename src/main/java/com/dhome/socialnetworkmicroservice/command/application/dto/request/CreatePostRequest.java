@@ -10,18 +10,12 @@ import java.util.Date;
 
 @Value
 public class CreatePostRequest {
-    @Schema(example = "1", description = "ID de la publicaion")
-    private @Setter
-    @Getter
-    String postId;
-
-    @Schema(example = "Esta es mi publicación", description = "Nombre del cliente")
-    private @Getter String description;
-
-    @Schema(example = "14/11/2020", description = "Fecha de publicación")
-    private @Getter
-    Date createdDate;
-
-    @Schema(example = "1", description = "Employee que crea la publicacion")
-    private @Getter String employeeId;
+    @Schema(example = "https://youtu.be/RSmwdijv_M0", description = "URL de video")
+    private String videoUrl;
+    @Schema(example = "No estaré en casa", description = "Contenido de la publicación")
+    private String content;
+    @Schema(example = "02/09/2021", description = "Fecha de subida")
+    private Date uploadDate;
+    @Schema(example = "0992", description = "ID de empleador")
+    private String employeeId;
 }

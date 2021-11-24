@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CommentMessageRepository  extends JpaRepository<CommentMessage,String> {
-    Optional<CommentMessage> getCommentMessageByCommentId(String id);
+public interface CommentTextRepository extends JpaRepository<CommentText,String> {
+    Optional<CommentText> getCommentTextByCommentId(String id);
 }
+

@@ -6,21 +6,25 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-public class CommentMessage {
+public class CommentText {
     @Id
     private String commentId;
     @NotNull
-    private String message;
+    private String text;
+    @NotNull
+    private String commenterId;
     @NotNull
     private String postId;
 
-    public CommentMessage(){
+    public CommentText(){
 
     }
 
-    public CommentMessage(String commentId, String message, String postId){
+    public CommentText(String commentId, String text, String commenterId, String postId){
         this.commentId = commentId;
-        this.message = message;
+        this.text = text;
+        this.commenterId = commenterId;
         this.postId = postId;
     }
 }
+

@@ -18,28 +18,27 @@ import java.util.Optional;
 public class CommentViewProjection {
     private final CommentViewRepository commentViewRepository;
 
-    public CommentViewProjection(CommentViewRepository commentViewRepository) {
-        this.commentViewRepository = commentViewRepository;
-    }
+    public CommentViewProjection(CommentViewRepository commentViewRepository) { this.commentViewRepository=commentViewRepository; }
 
     @EventHandler
     public void on(CommentCreated event, @Timestamp Instant timestamp){
         CommentView commentView = new CommentView(event.getCommentId(),
-                event.getMessage(),
+                event.getText(),
+                event.getCommenterId(),
                 event.getPostId(),
-                event.getOccuredOn(),
+                event.getOccurredOn(),
                 timestamp);
         commentViewRepository.save(commentView);
     }
 
-
-
     @EventHandler
-    public void on(CommentEdited event){
+    public void on(CommentEdited event, @Timestamp Instant timestamp){
         Optional<CommentView> commentViewOptional = commentViewRepository.getCommentViewByCommentId(event.getCommentId());
-        if (commentViewOptional.isPresent()){
+        if(commentViewOptional.isPresent()){
             CommentView commentView = commentViewOptional.get();
-            commentView.setMessage(event.getMessage());
+            commentView.setText(event.getText());
+            commentView.setCommenterId(event.getCommenterId());
+            commentView.setPostId(event.getPostId());
             commentViewRepository.save(commentView);
         }
     }

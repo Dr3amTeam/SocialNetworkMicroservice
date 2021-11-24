@@ -1,5 +1,6 @@
 package com.dhome.socialnetworkmicroservice.query.api;
 
+import com.dhome.socialnetworkmicroservice.config.SwaggerConfig;
 import com.dhome.socialnetworkmicroservice.query.projections.*;
 import io.swagger.annotations.*;
 import org.springframework.http.*;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/comments")
-@Api(tags = "Comments")
+@Api(tags = {SwaggerConfig.COMMENTS})
 public class CommentQueryController {
     private final CommentViewRepository commentViewRepository;
     private final CommentHistoryViewRepository commentHistoryViewRepository;
@@ -20,46 +21,45 @@ public class CommentQueryController {
         this.commentHistoryViewRepository = commentHistoryViewRepository;
     }
 
-//    @GetMapping("")
-//    @ApiOperation(value = "Get all comments", response = List.class)
-//    public ResponseEntity<List<CommentView>> getAll(){
-//        try{
-//            return new ResponseEntity<List<CommentView>>(commentViewRepository.findAll(), HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
     @GetMapping("")
-    @ApiOperation(value = "Get all comment", response = List.class)
-    public ResponseEntity<List<CommentView>> getAll(){
-        try{
-            return new ResponseEntity<List<CommentView>>(commentViewRepository.findAll(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping(path = "/{commentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get comment by id", response = CommentView.class)
-    public ResponseEntity<CommentView> getByPostId(@PathVariable("postId") String commentId) {
+    @ApiOperation(value = "Obtener todos los comentarios", response = List.class)
+    public ResponseEntity<List<CommentView>> getAll() {
         try {
-            Optional<CommentView> commentViewOptional = commentViewRepository.findById(commentId);
-            CommentView response = commentViewOptional.get();
-            return new ResponseEntity<CommentView>(response,HttpStatus.OK);
-//            if (postViewOptional.isPresent()) {
-//                return new ResponseEntity<PostView>(postViewOptional.get(), HttpStatus.OK);
-//            }
-//            return new ResponseEntity("NOT_FOUND", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<CommentView>>(commentViewRepository.findAll(), HttpStatus.OK);
         } catch( Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{postId}")
-    @ApiOperation(value = "Get by post Id", response = List.class)
+    @GetMapping("/postId/{postId}")
+    @ApiOperation(value = "Obtener todos los comentarios por Id de post", response = List.class)
     public ResponseEntity<List<CommentView>> getAllByPostId(@PathVariable("postId")String postId) {
         try {
-            List<CommentView> commentView = commentViewRepository.getCommentViewByPostId(postId);
-            return new ResponseEntity<List<CommentView>>(commentView, HttpStatus.OK);
+            List<CommentView> commentViews = commentViewRepository.getCommentViewsByPostId(postId);
+            return new ResponseEntity<List<CommentView>>(commentViews, HttpStatus.OK);
+        } catch( Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Obtener comentario por Id", response = List.class)
+    public ResponseEntity<CommentView> getAll(@PathVariable("id") String id) {
+        try {
+            Optional<CommentView> commentView = commentViewRepository.findById(id);
+            CommentView response = commentView.get();
+            return new ResponseEntity<CommentView>(response,HttpStatus.OK);
+        } catch( Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/history/{id}")
+    @ApiOperation(value = "Obtener historial por Id de comentario", response = List.class)
+    public ResponseEntity<List<CommentHistoryView>> getHistoryByCommentId(@PathVariable("id") String id) {
+        try {
+            List<CommentHistoryView> comments = commentHistoryViewRepository.getHistoryByCommentId(id);
+            return new ResponseEntity<List<CommentHistoryView>>(comments, HttpStatus.OK);
         } catch( Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

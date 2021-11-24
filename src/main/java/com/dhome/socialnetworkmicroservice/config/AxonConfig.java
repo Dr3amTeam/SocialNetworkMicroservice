@@ -16,16 +16,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AxonConfig {
-
-//    @Autowired
-//    private AxonConfiguration axonConfiguration;
-//    @Autowired
-//    private EventBus eventBus;
-//
-//    @Autowired
-//    public void configure(@Qualifier("localSegment") SimpleCommandBus simpleCommandBus){
-//        simpleCommandBus.registerDispatchInterceptor(new BeanValidationInterceptor<>());
-//    }
     @Bean
     public Repository<Post> eventSourcingRepository(EventStore eventStore){
         return EventSourcingRepository.builder(Post.class)

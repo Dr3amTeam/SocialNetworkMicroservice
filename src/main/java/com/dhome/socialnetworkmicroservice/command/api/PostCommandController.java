@@ -6,7 +6,7 @@ import com.dhome.common.application.Result;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.CreatePostRequest;
 import com.dhome.socialnetworkmicroservice.command.application.dto.response.CreatePostResponse;
 import com.dhome.socialnetworkmicroservice.command.application.services.PostApplicationService;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContentRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostCommandController {
     private final CommandGateway commandGateway;
     private final PostApplicationService postApplicationService;
-    private final PostDescriptionRepository postDescriptionRepository;
+    private final PostContentRepository postContentRepository;
 
-    public PostCommandController(CommandGateway commandGateway, PostApplicationService postApplicationService, PostDescriptionRepository postDescriptionRepository  ){
+    public PostCommandController(CommandGateway commandGateway, PostApplicationService postApplicationService, PostContentRepository postContentRepository  ){
         this.commandGateway=commandGateway;
         this.postApplicationService = postApplicationService;
-        this.postDescriptionRepository = postDescriptionRepository;
+        this.postContentRepository = postContentRepository;
     }
 
     @PostMapping(path= "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

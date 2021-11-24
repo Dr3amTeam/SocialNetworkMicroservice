@@ -3,7 +3,7 @@ package com.dhome.socialnetworkmicroservice.command.application.validators;
 import com.dhome.common.application.Notification;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.EditPostRequest;
 import com.dhome.socialnetworkmicroservice.command.domain.Post;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContentRepository;
 import org.axonframework.messaging.unitofwork.DefaultUnitOfWork;
 import org.axonframework.messaging.unitofwork.UnitOfWork;
 import org.axonframework.modelling.command.AggregateNotFoundException;
@@ -14,11 +14,11 @@ import java.util.Date;
 
 @Component
 public class EditPostValidator {
-    private final PostDescriptionRepository postDescriptionRepository;
+    private final PostContentRepository postContentRepository;
     private final Repository<Post> postRepository;
 
-    public EditPostValidator(PostDescriptionRepository postDescriptionRepository, Repository<Post> postRepository) {
-        this.postDescriptionRepository = postDescriptionRepository;
+    public EditPostValidator(PostContentRepository postContentRepository, Repository<Post> postRepository) {
+        this.postContentRepository = postContentRepository;
         this.postRepository = postRepository;
     }
 
@@ -30,19 +30,21 @@ public class EditPostValidator {
             notification.addError("Post id is required");
         }
         loadPostAggregate(postId);
-        String description = editPostRequest.getDescription().trim();
-        if(description.isEmpty()){
-            notification.addError("Post description is required");
+        String videoUrl = editPostRequest.getVideoUrl().trim();
+        if(videoUrl.isEmpty()){
+            notification.addError("Video URL is required");
         }
-        Date createdDate = editPostRequest.getCreatedDate();
-        if(createdDate == null){
-            notification.addError("Post created date is required");
+        String content = editPostRequest.getContent().trim();
+        if(content.isEmpty()){
+            notification.addError("Post content is required");
         }
-
-
+        Date uploadDate = editPostRequest.getUploadDate();
+        if(uploadDate == null){
+            notification.addError("Post upload date is required");
+        }
         String employeeId = editPostRequest.getEmployeeId().trim();
         if(employeeId.isEmpty()){
-            notification.addError("Emlpoyee ID is required");
+            notification.addError("Employee ID is required");
         }
         return notification;
     }

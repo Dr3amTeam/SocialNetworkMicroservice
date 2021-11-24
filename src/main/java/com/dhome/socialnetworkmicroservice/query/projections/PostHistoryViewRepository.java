@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface PostHistoryViewRepository extends JpaRepository<PostHistoryView,String> {
-    @Query(value = "SELECT * FROM `dhome-social`.post_history_view WHERE post_id= :postId ORDER BY created_at",nativeQuery = true)
+    @Query(value = "SELECT * FROM post_history_view WHERE post_id= :postId ORDER BY created_at",nativeQuery = true)
     List<PostHistoryView> getHistoryByPostId(String postId);
+
     Optional<PostHistoryView> getPostHistoryViewByPostId(String postId);
 }

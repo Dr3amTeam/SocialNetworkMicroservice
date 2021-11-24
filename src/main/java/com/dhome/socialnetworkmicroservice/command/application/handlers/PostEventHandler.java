@@ -1,7 +1,7 @@
 package com.dhome.socialnetworkmicroservice.command.application.handlers;
 
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescription;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContent;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContentRepository;
 import com.dhome.socialnetworkmicroservicecontracts.events.PostCreated;
 import com.dhome.socialnetworkmicroservicecontracts.events.PostEdited;
 import org.axonframework.config.ProcessingGroup;
@@ -12,29 +12,33 @@ import java.util.Optional;
 
 @Component
 @ProcessingGroup("post")
-public class PostEventHandler{
-    private final PostDescriptionRepository postDescriptionRepository;
+public class PostEventHandler {
+    private final PostContentRepository postContentRepository;
 
-    public PostEventHandler(PostDescriptionRepository postDescriptionRepository) {
-        this.postDescriptionRepository = postDescriptionRepository;
+    public PostEventHandler(PostContentRepository postContentRepository) {
+        this.postContentRepository = postContentRepository;
     }
     @EventHandler
     public void on(PostCreated event){
-        postDescriptionRepository.save(new PostDescription(
+        postContentRepository.save(new PostContent(
                 event.getPostId(),
-                event.getDescription(),
-                event.getCreatedDate()
-                ));
+                event.getVideoUrl(),
+                event.getContent(),
+                event.getUploadDate(),
+                event.getEmployeeId()
+        ));
     }
 
     @EventHandler
     public void on(PostEdited event) {
-        Optional<PostDescription> PostDescriptionOptional = postDescriptionRepository.getPostDescriptionByPostId(event.getPostId());
-        PostDescriptionOptional.ifPresent(postDescriptionRepository::delete);
-        postDescriptionRepository.save(new PostDescription(
+        Optional<PostContent> PostContentOptional = postContentRepository.getPostContentByPostId(event.getPostId());
+        PostContentOptional.ifPresent(postContentRepository::delete);
+        postContentRepository.save(new PostContent(
                 event.getPostId(),
-                event.getDescription(),
-                event.getCreatedDate()
+                event.getVideoUrl(),
+                event.getContent(),
+                event.getUploadDate(),
+                event.getEmployeeId()
         ));
     }
 

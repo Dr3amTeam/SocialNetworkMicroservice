@@ -13,50 +13,32 @@ import java.util.Optional;
 @Component
 @ProcessingGroup("post")
 public class PostHistoryViewProjection {
-    private final PostHistoryViewRepository postHistoryViewRepository;
+    private final PostHistoryViewRepository postViewRepository;
 
-    public PostHistoryViewProjection(PostHistoryViewRepository postHistoryViewRepository) {
-        this.postHistoryViewRepository = postHistoryViewRepository;
-    }
+    public PostHistoryViewProjection(PostHistoryViewRepository postViewRepository) { this.postViewRepository = postViewRepository; }
 
     @EventHandler
     public void on(PostCreated event, @Timestamp Instant timestamp){
         PostHistoryView postHistoryView = new PostHistoryView(event.getPostId(),
-                event.getDescription(),
-                event.getCreatedDate(),
+                event.getVideoUrl(),
+                event.getContent(),
+                event.getUploadDate(),
                 event.getEmployeeId(),
-                event.getOccuredOn(),
+                event.getOccurredOn(),
                 timestamp);
-        postHistoryViewRepository.save(postHistoryView);
+        postViewRepository.save(postHistoryView);
     }
-
-//    @EventHandler
-//    public void on(CustomerAccount event){
-//        Optional<CustomerHistoryView> optionalCustomerHistoryView = accountHistoryViewRepository.getCustomerHistoryViewByAccountId(event.getCustomerId());
-//        if (optionalCustomerHistoryView.isPresent()){
-//            CustomerHistoryView customerHistoryView = optionalCustomerHistoryView.get();
-//            customerHistoryView.setBalance(customerHistoryView.getBalance().subtract(event.getAmount()));
-//            accountHistoryViewRepository.save(customerHistoryView);
-//        }
-//    }
 
     @EventHandler
-    public void on(PostEdited event){
-        Optional<PostHistoryView> postHistoryViewOptional = postHistoryViewRepository.getPostHistoryViewByPostId(event.getPostId());
-        if (postHistoryViewOptional.isPresent()){
+    public void on(PostEdited event, @Timestamp Instant timestamp){
+        Optional<PostHistoryView> postHistoryViewOptional = postViewRepository.getPostHistoryViewByPostId(event.getPostId());
+        if(postHistoryViewOptional.isPresent()){
             PostHistoryView postHistoryView = postHistoryViewOptional.get();
-            postHistoryView.setDescripcion(event.getDescription());
-//            postHistoryView.setCreatedDate(event.getCreatedDate());
-
+            postHistoryView.setVideoUrl(event.getVideoUrl());
+            postHistoryView.setContent(event.getContent());
+            postHistoryView.setUploadDate(event.getUploadDate());
+            postHistoryView.setEmployeeId(event.getEmployeeId());
+            postViewRepository.save(postHistoryView);
         }
     }
-//    @EventHandler
-//    public void on(FromCustomerAccount event){
-//        Optional<CustomerHistoryView> optionalCustomerHistoryView = accountHistoryViewRepository.getCustomerHistoryViewByAccountId(event.getCustomerId());
-//        if (optionalCustomerHistoryView.isPresent()){
-//            CustomerHistoryView customerHistoryView = optionalCustomerHistoryView.get();
-//            customerHistoryView.setBalance(customerHistoryView.getBalance().subtract(event.getAmount()));
-//            accountHistoryViewRepository.save(customerHistoryView);
-//        }
-//    }
 }

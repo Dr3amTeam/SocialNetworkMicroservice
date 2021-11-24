@@ -18,20 +18,22 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 public class Post {
     @AggregateIdentifier
     private String postId;
-    private String description;
-    private Date createdDate;
+    private String videoUrl;
+    private String content;
+    private Date uploadDate;
     private String employeeId;
 
-    public Post(){
-
+    protected Post() {
     }
+
     @CommandHandler
     public Post(CreatePost command) {
         Instant now = Instant.now();
         apply(new PostCreated(
                 command.getPostId(),
-                command.getDescription(),
-                command.getCreatedDate(),
+                command.getVideoUrl(),
+                command.getContent(),
+                command.getUploadDate(),
                 command.getEmployeeId(),
                 now
         ));
@@ -43,8 +45,9 @@ public class Post {
         apply(
                 new PostEdited(
                         command.getPostId(),
-                        command.getDescription(),
-                        command.getCreatedDate(),
+                        command.getVideoUrl(),
+                        command.getContent(),
+                        command.getUploadDate(),
                         command.getEmployeeId(),
                         now
                 )
@@ -54,16 +57,18 @@ public class Post {
     @EventSourcingHandler
     public void on(PostCreated event) {
         this.postId = event.getPostId();
-        this.description = event.getDescription();
-        this.createdDate = event.getCreatedDate();
+        this.videoUrl = event.getVideoUrl();
+        this.content = event.getContent();
+        this.uploadDate = event.getUploadDate();
         this.employeeId = event.getEmployeeId();
     }
 
     @EventSourcingHandler
     public void on(PostEdited event) {
         this.postId = event.getPostId();
-        this.description = event.getDescription();
-        this.createdDate = event.getCreatedDate();
+        this.videoUrl = event.getVideoUrl();
+        this.content = event.getContent();
+        this.uploadDate = event.getUploadDate();
         this.employeeId = event.getEmployeeId();
     }
 }

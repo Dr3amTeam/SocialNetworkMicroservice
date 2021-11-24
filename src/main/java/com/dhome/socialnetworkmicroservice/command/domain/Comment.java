@@ -17,10 +17,11 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 public class Comment {
     @AggregateIdentifier
     private String commentId;
-    private String message;
+    private String text;
+    private String commenterId;
     private String postId;
 
-    public Comment() {
+    protected Comment() {
     }
 
     @CommandHandler
@@ -28,7 +29,8 @@ public class Comment {
         Instant now = Instant.now();
         apply(new CommentCreated(
                 command.getCommentId(),
-                command.getMessage(),
+                command.getText(),
+                command.getCommenterId(),
                 command.getPostId(),
                 now
         ));
@@ -40,7 +42,8 @@ public class Comment {
         apply(
                 new CommentEdited(
                         command.getCommentId(),
-                        command.getMessage(),
+                        command.getText(),
+                        command.getCommenterId(),
                         command.getPostId(),
                         now
                 )
@@ -50,14 +53,16 @@ public class Comment {
     @EventSourcingHandler
     public void on(CommentCreated event) {
         this.commentId = event.getCommentId();
-        this.message = event.getMessage();
+        this.text = event.getText();
+        this.commenterId = event.getCommenterId();
         this.postId = event.getPostId();
     }
 
     @EventSourcingHandler
     public void on(CommentEdited event) {
         this.commentId = event.getCommentId();
-        this.message = event.getMessage();
+        this.text = event.getText();
+        this.commenterId = event.getCommenterId();
         this.postId = event.getPostId();
     }
 }

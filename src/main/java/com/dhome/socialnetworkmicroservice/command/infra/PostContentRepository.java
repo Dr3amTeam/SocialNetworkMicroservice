@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PostDescriptionRepository extends JpaRepository<PostDescription,String> {
-    Optional<PostDescription> getPostDescriptionByPostId(String id);
+public interface PostContentRepository extends JpaRepository<PostContent,String> {
+    Optional<PostContent> getPostContentByPostId(String id);
 }

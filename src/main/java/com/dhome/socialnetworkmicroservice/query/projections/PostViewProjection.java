@@ -15,29 +15,29 @@ import java.util.Optional;
 public class PostViewProjection {
     private final PostViewRepository postViewRepository;
 
-    public PostViewProjection(PostViewRepository postViewRepository) {
-        this.postViewRepository = postViewRepository;
-    }
+    public PostViewProjection(PostViewRepository postViewRepository) { this.postViewRepository = postViewRepository; }
 
     @EventHandler
     public void on(PostCreated event, @Timestamp Instant timestamp){
         PostView postView = new PostView(event.getPostId(),
-                event.getDescription(),
-                event.getCreatedDate(),
+                event.getVideoUrl(),
+                event.getContent(),
+                event.getUploadDate(),
                 event.getEmployeeId(),
-                event.getOccuredOn(),
+                event.getOccurredOn(),
                 timestamp);
         postViewRepository.save(postView);
     }
 
-
-
     @EventHandler
-    public void on(PostEdited event){
+    public void on(PostEdited event, @Timestamp Instant timestamp){
         Optional<PostView> postViewOptional = postViewRepository.getPostViewByPostId(event.getPostId());
-        if (postViewOptional.isPresent()){
+        if(postViewOptional.isPresent()){
             PostView postView = postViewOptional.get();
-            postView.setDescription(event.getDescription());
+            postView.setVideoUrl(event.getVideoUrl());
+            postView.setContent(event.getContent());
+            postView.setUploadDate(event.getUploadDate());
+            postView.setEmployeeId(event.getEmployeeId());
             postViewRepository.save(postView);
         }
     }

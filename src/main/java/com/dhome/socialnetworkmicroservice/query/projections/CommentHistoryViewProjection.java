@@ -15,31 +15,30 @@ import java.util.Optional;
 @Component
 @ProcessingGroup("comment")
 public class CommentHistoryViewProjection {
-    private final CommentHistoryViewRepository commentHistoryViewRepository;
+    private final CommentHistoryViewRepository commentViewRepository;
 
-    public CommentHistoryViewProjection(CommentHistoryViewRepository commentHistoryViewRepository) {
-        this.commentHistoryViewRepository = commentHistoryViewRepository;
-    }
+    public CommentHistoryViewProjection(CommentHistoryViewRepository commentViewRepository) { this.commentViewRepository = commentViewRepository; }
 
     @EventHandler
     public void on(CommentCreated event, @Timestamp Instant timestamp){
         CommentHistoryView commentHistoryView = new CommentHistoryView(event.getCommentId(),
-                event.getMessage(),
+                event.getText(),
+                event.getCommenterId(),
                 event.getPostId(),
-                event.getOccuredOn(),
+                event.getOccurredOn(),
                 timestamp);
-        commentHistoryViewRepository.save(commentHistoryView);
+        commentViewRepository.save(commentHistoryView);
     }
 
-
-
     @EventHandler
-    public void on(CommentEdited event){
-        Optional<CommentHistoryView> commentHistoryViewOptional = commentHistoryViewRepository.getCommentHistoryViewByCommentHistoryId(event.getCommentId());
-        if (commentHistoryViewOptional.isPresent()){
+    public void on(CommentEdited event, @Timestamp Instant timestamp){
+        Optional<CommentHistoryView> commentHistoryViewOptional = commentViewRepository.getCommentHistoryViewByCommentId(event.getCommentId());
+        if(commentHistoryViewOptional.isPresent()){
             CommentHistoryView commentHistoryView = commentHistoryViewOptional.get();
-            commentHistoryView.setMessage(event.getMessage());
-
+            commentHistoryView.setText(event.getText());
+            commentHistoryView.setCommenterId(event.getCommenterId());
+            commentHistoryView.setPostId(event.getPostId());
+            commentViewRepository.save(commentHistoryView);
         }
     }
 }

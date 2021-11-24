@@ -7,7 +7,7 @@ import com.dhome.socialnetworkmicroservice.command.application.dto.request.Creat
 import com.dhome.socialnetworkmicroservice.command.application.dto.response.CreatePostResponse;
 import com.dhome.socialnetworkmicroservice.command.application.validators.CreatePostValidator;
 import com.dhome.socialnetworkmicroservice.command.application.validators.EditPostValidator;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.PostContentRepository;
 import com.dhome.socialnetworkmicroservicecontracts.commands.CreatePost;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Component;
@@ -20,13 +20,13 @@ public class PostApplicationService {
     private final CreatePostValidator createPostValidator;
     private final CommandGateway commandGateway;
     private final EditPostValidator editPostValidator;
-    private final PostDescriptionRepository postDescriptionRepository;
+    private final PostContentRepository postContentRepository;
 
-    public PostApplicationService(CreatePostValidator createPostValidator, EditPostValidator editPostValidator, CommandGateway commandGateway, PostDescriptionRepository postDescriptionRepository) {
+    public PostApplicationService(CreatePostValidator createPostValidator, EditPostValidator editPostValidator, CommandGateway commandGateway, PostContentRepository postContentRepository) {
         this.createPostValidator = createPostValidator;
         this.editPostValidator = editPostValidator;
         this.commandGateway = commandGateway;
-        this.postDescriptionRepository = postDescriptionRepository;
+        this.postContentRepository = postContentRepository;
     }
 
     public Result<CreatePostResponse, Notification> create(CreatePostRequest createPostRequest) throws Exception{
@@ -37,23 +37,24 @@ public class PostApplicationService {
         String postId = UUID.randomUUID().toString();
         CreatePost createPost = new CreatePost(
                 postId,
-                createPostRequest.getDescription().trim(),
-                createPostRequest.getCreatedDate(),
+                createPostRequest.getVideoUrl().trim(),
+                createPostRequest.getContent().trim(),
+                createPostRequest.getUploadDate(),
                 createPostRequest.getEmployeeId()
         );
         CompletableFuture<Object> future = commandGateway.send(createPost);
-        CompletableFuture<ResultType> futureResult = future.handle((ok,ex)->(ex!=null)? ResultType.FAILURE:ResultType.SUCCESS);
+        CompletableFuture<ResultType> futureResult = future.handle((ok, ex)->(ex!=null)? ResultType.FAILURE:ResultType.SUCCESS);
         ResultType resultType = futureResult.get();
         if (resultType == ResultType.FAILURE){
             throw new Exception();
         }
         CreatePostResponse createPostResponse = new CreatePostResponse(
                 createPost.getPostId(),
-                createPost.getDescription(),
-                createPost.getCreatedDate()
+                createPost.getVideoUrl(),
+                createPost.getContent(),
+                createPost.getUploadDate(),
+                createPost.getEmployeeId()
         );
         return Result.success(createPostResponse);
     }
-
-
 }

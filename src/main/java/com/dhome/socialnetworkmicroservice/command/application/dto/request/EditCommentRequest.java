@@ -9,13 +9,11 @@ import lombok.Value;
 @Value
 public class EditCommentRequest {
     @Schema(example = "1", description = "ID del comentario")
-    private @Setter
-    @Getter
-    String commentId;
-
-    @Schema(example = "Hola como estas", description = "Mensaje del comentario")
-    private @Getter String message;
-
-    @Schema(example = "1", description = "ID de la publicacion")
+    private @Setter @Getter String commentId;
+    @Schema(example = "Buen viaje", description = "Contenido del comentario")
+    private @Getter String text;
+    @Schema(example = "1", description = "ID del comentador")
+    private @Getter String commenterId;
+    @Schema(example = "1", description = "ID del post")
     private @Getter String postId;
 }

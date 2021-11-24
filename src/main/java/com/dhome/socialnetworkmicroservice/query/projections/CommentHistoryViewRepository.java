@@ -9,7 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface CommentHistoryViewRepository extends JpaRepository<CommentHistoryView,String> {
-    @Query(value = "SELECT * FROM `dhome-social`.comment_history_view WHERE comment_id= :commentId ORDER BY created_at",nativeQuery = true)
-    List<CommentHistoryView> getCommentHistoryByCommentId(String commentId);
-    Optional<CommentHistoryView> getCommentHistoryViewByCommentHistoryId(String commentHistoryId);
+    @Query(value = "SELECT * FROM comment_history_view WHERE comment_id= :commentId ORDER BY created_at",nativeQuery = true)
+    List<CommentHistoryView> getHistoryByCommentId(String commentId);
+
+    Optional<CommentHistoryView> getCommentHistoryViewByCommentId(String commentId);
 }

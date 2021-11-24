@@ -9,12 +9,10 @@ import java.util.Date;
 
 @Value
 public class CreateCommentRequest {
-    @Schema(example = "1", description = "ID del comentario")
-    private @Setter @Getter String commentId;
-
-    @Schema(example = "Hola como estas", description = "Mensaje del comentario")
-    private @Getter String message;
-
-    @Schema(example = "1", description = "ID de la publicacion")
-    private @Getter String postId;
+    @Schema(example = "Buen viaje", description = "Contenido del comentario")
+    private String text;
+    @Schema(example = "1", description = "ID del comentador")
+    private String commenterId;
+    @Schema(example = "1", description = "ID del post")
+    private String postId;
 }

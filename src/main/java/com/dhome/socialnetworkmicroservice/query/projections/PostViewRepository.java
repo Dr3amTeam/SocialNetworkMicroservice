@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PostViewRepository extends JpaRepository<PostView, String> {
+public interface PostViewRepository extends JpaRepository<PostView,String> {
     Optional<PostView> getPostViewByPostId(String postId);
-//    List<PostView> getPostByEmployeeId(String employeeId);
-
-
+    List<PostView> getPostViewsByEmployeeId(String employeeId);
 }

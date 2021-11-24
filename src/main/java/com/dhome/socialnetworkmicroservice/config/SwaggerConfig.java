@@ -21,24 +21,25 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .tags(new Tag(POSTS, "Social Network microservice"),
-                        new Tag(COMMENTS, "Social Network microservice"))
+                .tags(new Tag(POSTS,"Muestra las funcionalidades para la publicación"),
+                        new Tag(COMMENTS,"Muestra las funcionalidades para el comentario"))
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(getApiInfo());
     }
 
-//    private ApiInfo getApiInfo() {
-//        return new ApiInfo(
-//                "Social network Microservice API",
-//                "Microservicio de social network",
-//                "1.0",
-//                "",
-//                new Contact("Dr3amTeam", "https://github.com/Dr3amTeam/", "admin@dr3amteam.com"),
-//                "LICENSE",
-//                "https://www.mit.edu/~amini/LICENSE.md",
-//                Collections.emptyList()
-//        );
-//    }
+    private ApiInfo getApiInfo() {
+        return new ApiInfo(
+                "Social Network Microservice API",
+                "Microservicio de Social Network",
+                "1.0",
+                "",
+                new Contact("Dr3amTeam", "https://github.com/Dr3amTeam/", "admin@dr3amteam.com"),
+                "LICENSE",
+                "https://www.mit.edu/~amini/LICENSE.md",
+                Collections.emptyList()
+        );
+    }
 }

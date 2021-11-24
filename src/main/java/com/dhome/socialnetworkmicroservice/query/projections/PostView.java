@@ -12,38 +12,37 @@ import javax.persistence.Table;
 import java.time.Instant;
 import java.util.Date;
 
-//@Data
 @Entity
-//@Table(name = "posts")
 public class PostView {
+    @Schema(example = "1", description = "ID del post")
     @Id @Column(length = 36) @Getter @Setter
     private String postId;
-
-    @Schema(example = "Holacomo estas", description = "descripcion")
-    @Column(length = 100) @Getter @Setter
-    private String description;
-
-    @Column(name = "createdDate")
-    private Date createdDate;
-
-    @Schema(example = "Holacomo estas", description = "descripcion")
-    @Column(length = 100, name = "employee_id") @Getter @Setter
+    @Schema(example = "https://youtu.be/RSmwdijv_M0", description = "URL de video")
+    @Column(length = 50) @Getter @Setter
+    private String videoUrl;
+    @Schema(example = "No estaré en casa", description = "Contenido de la publicación")
+    @Column(length = 300) @Getter @Setter
+    private String content;
+    @Schema(example = "02/09/2021", description = "Fecha de subida")
+    @Column(length = 10) @Getter @Setter
+    private Date uploadDate;
+    @Schema(example = "992", description = "ID de empleador")
+    @Column(length = 36) @Getter @Setter
     private String employeeId;
-
     @Schema(example = "19/11/2021",description = "Fecha de creación")
     @Column(nullable = true) @Getter @Setter
     private Instant createdAt;
-
     @Schema(example = "21/11/2021",description = "Fecha de actualización")
     @Column(nullable = true) @Getter @Setter
     private Instant updatedAt;
 
-    public PostView() { }
+    public PostView() {}
 
-    public PostView(String postId, String description, Date createdDate, String employeeId, Instant createdAt, Instant updatedAt){
+    public PostView(String postId, String videoUrl, String content, Date uploadDate, String employeeId, Instant createdAt, Instant updatedAt) {
         this.postId = postId;
-        this.description = description;
-        this.createdDate = createdDate;
+        this.videoUrl = videoUrl;
+        this.content = content;
+        this.uploadDate = uploadDate;
         this.employeeId = employeeId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

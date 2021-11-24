@@ -4,17 +4,11 @@ import com.dhome.common.application.Notification;
 import com.dhome.common.application.Result;
 import com.dhome.common.application.ResultType;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.CreateCommentRequest;
-import com.dhome.socialnetworkmicroservice.command.application.dto.request.CreatePostRequest;
 import com.dhome.socialnetworkmicroservice.command.application.dto.response.CreateCommentResponse;
-import com.dhome.socialnetworkmicroservice.command.application.dto.response.CreatePostResponse;
 import com.dhome.socialnetworkmicroservice.command.application.validators.CreateCommentValidator;
-import com.dhome.socialnetworkmicroservice.command.application.validators.CreatePostValidator;
 import com.dhome.socialnetworkmicroservice.command.application.validators.EditCommentValidator;
-import com.dhome.socialnetworkmicroservice.command.application.validators.EditPostValidator;
-import com.dhome.socialnetworkmicroservice.command.infra.CommentMessageRepository;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.CommentTextRepository;
 import com.dhome.socialnetworkmicroservicecontracts.commands.CreateComment;
-import com.dhome.socialnetworkmicroservicecontracts.commands.CreatePost;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +20,13 @@ public class CommentApplicationService {
     private final CreateCommentValidator createCommentValidator;
     private final CommandGateway commandGateway;
     private final EditCommentValidator editCommentValidator;
-    private final CommentMessageRepository commentMessageRepository;
+    private final CommentTextRepository commentTextRepository;
 
-    public CommentApplicationService(CreateCommentValidator createCommentValidator, EditCommentValidator editCommentValidator, CommandGateway commandGateway, CommentMessageRepository commentMessageRepository) {
+    public CommentApplicationService(CreateCommentValidator createCommentValidator, EditCommentValidator editCommentValidator, CommandGateway commandGateway, CommentTextRepository commentTextRepository) {
         this.createCommentValidator = createCommentValidator;
         this.editCommentValidator = editCommentValidator;
         this.commandGateway = commandGateway;
-        this.commentMessageRepository = commentMessageRepository;
+        this.commentTextRepository = commentTextRepository;
     }
     public Result<CreateCommentResponse, Notification> create(CreateCommentRequest createCommentRequest) throws Exception{
         Notification notification = this.createCommentValidator.validate(createCommentRequest);
@@ -42,7 +36,8 @@ public class CommentApplicationService {
         String commentId = UUID.randomUUID().toString();
         CreateComment createComment = new CreateComment(
                 commentId,
-                createCommentRequest.getMessage().trim(),
+                createCommentRequest.getText().trim(),
+                createCommentRequest.getCommenterId().trim(),
                 createCommentRequest.getPostId().trim()
         );
 
@@ -54,9 +49,11 @@ public class CommentApplicationService {
         }
         CreateCommentResponse createCommentResponse = new CreateCommentResponse(
                 createComment.getCommentId(),
-                createComment.getMessage(),
+                createComment.getText(),
+                createComment.getCommenterId(),
                 createComment.getPostId()
         );
         return Result.success(createCommentResponse);
     }
 }
+

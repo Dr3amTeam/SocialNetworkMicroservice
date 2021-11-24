@@ -2,26 +2,21 @@ package com.dhome.socialnetworkmicroservice.command.application.validators;
 
 import com.dhome.common.application.Notification;
 import com.dhome.socialnetworkmicroservice.command.application.dto.request.EditCommentRequest;
-import com.dhome.socialnetworkmicroservice.command.application.dto.request.EditPostRequest;
 import com.dhome.socialnetworkmicroservice.command.domain.Comment;
-import com.dhome.socialnetworkmicroservice.command.domain.Post;
-import com.dhome.socialnetworkmicroservice.command.infra.CommentMessageRepository;
-import com.dhome.socialnetworkmicroservice.command.infra.PostDescriptionRepository;
+import com.dhome.socialnetworkmicroservice.command.infra.CommentTextRepository;
 import org.axonframework.messaging.unitofwork.DefaultUnitOfWork;
 import org.axonframework.messaging.unitofwork.UnitOfWork;
 import org.axonframework.modelling.command.AggregateNotFoundException;
 import org.axonframework.modelling.command.Repository;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
 public class EditCommentValidator {
-    private final CommentMessageRepository commentMessageRepository;
+    private final CommentTextRepository commentTextRepository;
     private final Repository<Comment> commentRepository;
 
-    public EditCommentValidator(CommentMessageRepository commentMessageRepository, Repository<Comment> commentRepository) {
-        this.commentMessageRepository = commentMessageRepository;
+    public EditCommentValidator(CommentTextRepository commentTextRepository, Repository<Comment> commentRepository) {
+        this.commentTextRepository = commentTextRepository;
         this.commentRepository = commentRepository;
     }
 
@@ -33,9 +28,13 @@ public class EditCommentValidator {
             notification.addError("Comment id is required");
         }
         loadCommentAggregate(commentId);
-        String message = editCommentRequest.getMessage().trim();
-        if(message.isEmpty()){
-            notification.addError("Comment message is required");
+        String text = editCommentRequest.getText().trim();
+        if(text.isEmpty()){
+            notification.addError("Comment text is required");
+        }
+        String commenterId = editCommentRequest.getCommenterId().trim();
+        if(commenterId.isEmpty()){
+            notification.addError("Commenter Id is required");
         }
 
         String postId = editCommentRequest.getPostId().trim();

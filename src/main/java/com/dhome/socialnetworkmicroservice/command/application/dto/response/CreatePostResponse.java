@@ -9,13 +9,9 @@ import java.util.Date;
 
 @Value
 public class CreatePostResponse {
-    @Schema(example = "1", description = "ID de la publicaion")
-    private @Setter
-    @Getter String postId;
-
-    @Schema(example = "Esta es mi publicación", description = "Nombre del cliente")
-    private @Getter String description;
-
-    @Schema(example = "14/11/2020", description = "Fecha de publicación")
-    private @Getter Date createdDate;
+    private String postId;
+    private String videoUrl;
+    private String content;
+    private Date uploadDate;
+    private String employeeId;;
 }
