@@ -37,7 +37,6 @@ public class CommentApplicationService {
         CreateComment createComment = new CreateComment(
                 commentId,
                 createCommentRequest.getText().trim(),
-                createCommentRequest.getCommenterId().trim(),
                 createCommentRequest.getPostId().trim()
         );
 
@@ -50,7 +49,6 @@ public class CommentApplicationService {
         CreateCommentResponse createCommentResponse = new CreateCommentResponse(
                 createComment.getCommentId(),
                 createComment.getText(),
-                createComment.getCommenterId(),
                 createComment.getPostId()
         );
         return Result.success(createCommentResponse);

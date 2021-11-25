@@ -18,7 +18,6 @@ public class Comment {
     @AggregateIdentifier
     private String commentId;
     private String text;
-    private String commenterId;
     private String postId;
 
     protected Comment() {
@@ -30,9 +29,7 @@ public class Comment {
         apply(new CommentCreated(
                 command.getCommentId(),
                 command.getText(),
-                command.getCommenterId(),
-                command.getPostId(),
-                now
+                command.getPostId()
         ));
     }
 
@@ -43,7 +40,6 @@ public class Comment {
                 new CommentEdited(
                         command.getCommentId(),
                         command.getText(),
-                        command.getCommenterId(),
                         command.getPostId(),
                         now
                 )
@@ -54,7 +50,6 @@ public class Comment {
     public void on(CommentCreated event) {
         this.commentId = event.getCommentId();
         this.text = event.getText();
-        this.commenterId = event.getCommenterId();
         this.postId = event.getPostId();
     }
 
@@ -62,7 +57,6 @@ public class Comment {
     public void on(CommentEdited event) {
         this.commentId = event.getCommentId();
         this.text = event.getText();
-        this.commenterId = event.getCommenterId();
         this.postId = event.getPostId();
     }
 }

@@ -23,7 +23,6 @@ public class CommentEventHandler {
         commentTextRepository.save(new CommentText(
                 event.getCommentId(),
                 event.getText(),
-                event.getCommenterId(),
                 event.getPostId()
         ));
     }
@@ -35,7 +34,6 @@ public class CommentEventHandler {
         commentTextRepository.save(new CommentText(
                 event.getCommentId(),
                 event.getText(),
-                event.getCommenterId(),
                 event.getPostId()
         ));
     }

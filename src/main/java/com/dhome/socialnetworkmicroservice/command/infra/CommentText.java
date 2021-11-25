@@ -12,18 +12,15 @@ public class CommentText {
     @NotNull
     private String text;
     @NotNull
-    private String commenterId;
-    @NotNull
     private String postId;
 
     public CommentText(){
 
     }
 
-    public CommentText(String commentId, String text, String commenterId, String postId){
+    public CommentText(String commentId, String text, String postId){
         this.commentId = commentId;
         this.text = text;
-        this.commenterId = commenterId;
         this.postId = postId;
     }
 }

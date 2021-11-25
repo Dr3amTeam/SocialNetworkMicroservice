@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/comments")
-@Api(tags="Comment")
+@Api(tags="Comments")
 public class CommentCommandController {
     private final CommandGateway commandGateway;
     private final CommentApplicationService commentApplicationService;

@@ -12,8 +12,6 @@ public class EditCommentRequest {
     private @Setter @Getter String commentId;
     @Schema(example = "Buen viaje", description = "Contenido del comentario")
     private @Getter String text;
-    @Schema(example = "1", description = "ID del comentador")
-    private @Getter String commenterId;
     @Schema(example = "1", description = "ID del post")
     private @Getter String postId;
 }

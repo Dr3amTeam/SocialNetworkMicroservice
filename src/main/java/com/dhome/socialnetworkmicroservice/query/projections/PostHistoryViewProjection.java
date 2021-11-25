@@ -23,9 +23,7 @@ public class PostHistoryViewProjection {
                 event.getVideoUrl(),
                 event.getContent(),
                 event.getUploadDate(),
-                event.getEmployeeId(),
-                event.getOccurredOn(),
-                timestamp);
+                event.getEmployeeId());
         postViewRepository.save(postHistoryView);
     }
 
